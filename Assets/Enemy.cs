@@ -6,16 +6,23 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] float speed = 10;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private Rigidbody2D rb;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        transform.position -= new Vector3(0, speed, 0) * Time.deltaTime;
+        Transform player = GameObject.Find("Player").transform;
+
+        rb = GetComponent<Rigidbody2D>();
+
+        if (player.position.x > transform.position.x)
+            rb.velocity = new Vector2(speed, rb.velocity.y);
+        else
+            rb.velocity = new Vector2(-speed, rb.velocity.y);
+
+        if (player.position.y > transform.position.y)
+            rb.velocity = new Vector2(rb.velocity.x, speed);
+        else
+            rb.velocity = new Vector2(rb.velocity.x, -speed);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

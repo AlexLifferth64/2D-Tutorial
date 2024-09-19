@@ -6,15 +6,13 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] float laserSpeed = 1.0f;
 
+    Rigidbody2D rb;
+
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
+        rb = GetComponent<Rigidbody2D>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        transform.position += new Vector3(0, laserSpeed, 0) * Time.deltaTime;
+        rb.velocity = transform.up * laserSpeed;
     }
 }

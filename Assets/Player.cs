@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    float yPosition;
+    [SerializeField] float speed = 5;
+
     [SerializeField] GameObject laser;
     // Start is called before the first frame update
-    void Start()
-    {
-        yPosition = transform.position.y;
-    }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 convertedPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector3(convertedPosition.x, yPosition, 0);
+        if(Input.GetKey(KeyCode.A))
+            transform.position = new Vector2(transform.position.x - speed, transform.position.y);
+        else if (Input.GetKey(KeyCode.D))
+            transform.position = new Vector2(transform.position.x + speed, transform.position.y);
+        if (Input.GetKey(KeyCode.W))
+            transform.position = new Vector2(transform.position.x, transform.position.y + speed);
+        else if (Input.GetKey(KeyCode.S))
+            transform.position = new Vector2(transform.position.x, transform.position.y - speed);
 
-        if(Input.GetKeyDown(KeyCode.Space))
-            Instantiate(laser, transform.position, Quaternion.identity);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            Instantiate(laser, transform.position, transform.rotation);
     }
 }
